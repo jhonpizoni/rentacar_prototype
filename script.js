@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 let vehicles = [
     { id: 1, brand: "Toyota", model: "Corolla", year: 2020, price: "R$150/dia" },
     { id: 2, brand: "Honda", model: "Civic", year: 2021, price: "R$180/dia" }
@@ -47,27 +46,3 @@ function registerCar() {
     alert("Veículo cadastrado com sucesso!");
     showView("listCars");
 }
-=======
-document.addEventListener("DOMContentLoaded", function () {
-    const sections = {
-        cadastro: document.getElementById("cadastro"),
-        carros: document.getElementById("carros"),
-        meusCarros: document.getElementById("meus-carros")
-    };
-    
-    function hideAllSections() {
-        Object.values(sections).forEach(section => section.style.display = "none");
-    }
-    
-    hideAllSections();
-    
-    document.querySelectorAll("nav ul li a").forEach(link => {
-        link.addEventListener("click", function (event) {
-            event.preventDefault();
-            const targetId = this.getAttribute("href").substring(1);
-            hideAllSections();
-            sections[targetId].style.display = "block";
-        });
-    });
-});
->>>>>>> b0e77165300a5e70da386bcb4cc7f91890e22a8f
