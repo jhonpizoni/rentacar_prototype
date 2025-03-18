@@ -1,4 +1,5 @@
 header {
+    margin-top: 20px;
     text-align: center;
 }
 body {
@@ -19,7 +20,7 @@ body {
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 20%;
+    border-radius: 5%;
 }
 
 .buttons button:hover {
@@ -42,7 +43,15 @@ body {
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 5%;
 }
 .card button:hover {
     background-color: #033d34;
+}
+.card input {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #00796b;
+    border-radius: 5px;
+    margin: 7px;
 }

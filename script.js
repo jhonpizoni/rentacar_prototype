@@ -1,7 +1,6 @@
-let vehicles = [
-    { id: 1, brand: "Toyota", model: "Corolla", year: 2020, price: "R$150/dia" },
-    { id: 2, brand: "Honda", model: "Civic", year: 2021, price: "R$180/dia" }
-];
+const apiBase = "https://parallelum.com.br/fipe/api/v1/";
+const tipoVeiculo = "carros";
+
 function toggleMenu() {
     document.getElementById("menu").classList.toggle("show");
 }
@@ -12,6 +11,8 @@ function showView(view) {
     if (view === "registerUser") {
         content.innerHTML = `<div class='card'>
             <h2>Cadastro de Usuário</h2>
+            <input type="radio" name="tipo" checked> Pessoa Física
+            <input type="radio" name="tipo"> Pessoa Jurídica
             <input type='text' id='userName' placeholder='Nome'>
             <input type='email' id='userEmail' placeholder='Email'>
             <input type='city' id='userCity' placeholder='Cidade'>
@@ -46,3 +47,4 @@ function registerCar() {
     alert("Veículo cadastrado com sucesso!");
     showView("listCars");
 }
+
