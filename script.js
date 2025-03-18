@@ -12,8 +12,6 @@ function showView(view) {
     if (view === "registerUser") {
         content.innerHTML = `<div class='card'>
             <h2>Cadastro de Usuário</h2>
-            <input type="radio" name="tipo" checked> Pessoa Física
-            <input type="radio" name="tipo"> Pessoa Jurídica
             <input type='text' id='userName' placeholder='Nome'>
             <input type='email' id='userEmail' placeholder='Email'>
             <input type='text' id='userCity' placeholder='Cidade'>
