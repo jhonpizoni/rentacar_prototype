@@ -1,7 +1,26 @@
 header {
     margin-top: 20px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
 }
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#searchBar {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #00796b;
+    width: 200px;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #004d40;
@@ -9,10 +28,12 @@ body {
     text-align: center;
     margin: 0;
 }
+
 .banner {
     width: 40%;
     margin-bottom: 20px;
 }
+
 .buttons button {
     margin: 10px;
     padding: 10px;
@@ -26,9 +47,11 @@ body {
 .buttons button:hover {
     background-color: #033d34;
 }
+
 .container {
     margin: auto;
 }
+
 .card {
     background: white;
     color: black;
@@ -36,6 +59,7 @@ body {
     margin: 20px 0;
     border-radius: 5px;
 }
+
 .card button {
     margin: 10px;
     padding: 10px;
@@ -45,13 +69,21 @@ body {
     cursor: pointer;
     border-radius: 5%;
 }
+
 .card button:hover {
     background-color: #033d34;
 }
+
 .card input {
     width: 200px;
     padding: 10px;
     border: 1px solid #00796b;
     border-radius: 5px;
     margin: 7px;
+}
+
+.search-bar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }

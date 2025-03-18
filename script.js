@@ -1,5 +1,6 @@
 const apiBase = "https://parallelum.com.br/fipe/api/v1/";
 const tipoVeiculo = "carros";
+let vehicles = [];
 
 function toggleMenu() {
     document.getElementById("menu").classList.toggle("show");
@@ -15,8 +16,8 @@ function showView(view) {
             <input type="radio" name="tipo"> Pessoa Jurídica
             <input type='text' id='userName' placeholder='Nome'>
             <input type='email' id='userEmail' placeholder='Email'>
-            <input type='city' id='userCity' placeholder='Cidade'>
-            <input type='es' id='userPostalCode' placeholder='Código postal'>
+            <input type='text' id='userCity' placeholder='Cidade'>
+            <input type='text' id='userPostalCode' placeholder='Código postal'>
             <button onclick='registerUser()'>Cadastrar</button>
         </div>`;
     } else if (view === "registerCar") {
@@ -29,14 +30,9 @@ function showView(view) {
             <button onclick='registerCar()'>Cadastrar</button>
         </div>`;
     } else if (view === "listCars") {
-        content.innerHTML = `<div class='card'><h2>Lista de Veículos Disponíveis</h2>
-            ${vehicles.map(v => `<p>${v.brand} ${v.model} (${v.year}) - ${v.price}</p>`).join('')}
-        </div>`;
+        renderCarList(vehicles);
     }
 }
-function toggleMenu() {
-            document.getElementById("menu").classList.toggle("show");
-        }
 
 function registerCar() {
     let brand = document.getElementById("carBrand").value;
@@ -48,3 +44,20 @@ function registerCar() {
     showView("listCars");
 }
 
+function renderCarList(filteredVehicles) {
+    let content = document.getElementById("content");
+    content.innerHTML = `<div class='card'><h2>Lista de Veículos Disponíveis</h2>
+        ${filteredVehicles.map(v => `<p>${v.brand} ${v.model} (${v.year}) - ${v.price}</p>`).join('')}
+    </div>`;
+}
+
+function searchCars() {
+    let searchText = document.getElementById("search-bar").value.toLowerCase();
+    let filteredVehicles = vehicles.filter(v =>
+        v.brand.toLowerCase().includes(searchText) ||
+        v.model.toLowerCase().includes(searchText) ||
+        v.year.toString().includes(searchText) ||
+        v.price.toLowerCase().includes(searchText)
+    );
+    renderCarList(filteredVehicles);
+}
