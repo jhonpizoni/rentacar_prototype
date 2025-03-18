@@ -27,7 +27,10 @@ header {
     cursor: pointer
 }
 
-.searchBar {
+#search-bar {
+    position: absolute;
+    top: 20px;
+    right: 70px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #00796b;
@@ -87,7 +90,7 @@ body {
     background-color: #033d34;
 }
 
-.card input {
+.card input, .card select {
     width: 200px;
     padding: 10px;
     border: 1px solid #00796b;
@@ -95,8 +98,9 @@ body {
     margin: 7px;
 }
 
-.search-bar {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+.custom-select {
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+    text-align: center;
 }
