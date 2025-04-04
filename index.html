@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <header>
-    <div class="barra-usuario">
-        <div class="barra-usuario">
-            <button onclick="showView('perfil')">
-                <span class="material-icons">person</span>
-            </button>
+    <div class="user-bar">
+        <button id="user-button">
+            <span class="material-icons">person</span>
+        </button>
+        <div id="user-menu" class="user-menu">
+            <button class="menu-item">Gerenciar Conta</button>
+            <button class="menu-item">Meus Veículos</button>
+            <button class="menu-item">Meus Aluguéis</button>
         </div>
     </div>
     <div class="container">

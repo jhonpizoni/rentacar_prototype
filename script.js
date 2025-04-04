@@ -2,6 +2,22 @@ const apiBase = "https://parallelum.com.br/fipe/api/v1/";
 const tipoVeiculo = "carros";
 let vehicles = [];
 
+document.addEventListener("DOMContentLoaded", function () {
+    const userButton = document.getElementById("user-button");
+    const userMenu = document.getElementById("user-menu");
+
+    userButton.addEventListener("click", function () {
+        userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!userButton.contains(event.target) && !userMenu.contains(event.target)) {
+            userMenu.style.display = "none";
+        }
+    });
+});
+
+
 function toggleMenu() {
     document.getElementById("menu").classList.toggle("show");
 }
