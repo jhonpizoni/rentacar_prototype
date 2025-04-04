@@ -7,34 +7,35 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
-<header>
-    <div class="user-bar">
-        <button id="user-button">
-            <span class="material-icons">person</span>
-        </button>
-        <div id="user-menu" class="user-menu">
-            <button class="menu-item">Gerenciar Conta</button>
-            <button class="menu-item">Meus Veículos</button>
-            <button class="menu-item">Meus Aluguéis</button>
-        </div>
-    </div>
-    <div class="container">
-        <div class="logo-container">
-        <img src="logotipo.jpg" alt="RentaCar Logo" class="banner">
-    </div>
-        <input type="text" id="search-bar" placeholder="Buscar veículos..." onkeyup="searchCars()">
-        <div class="buttons">
-            <button onclick="showView('registerUser')">Cadastrar Usuário</button>
-            <button onclick="showView('registerCar')">Cadastrar Veículo</button>
-            <button onclick="showView('listCars')">Lista de Veículos</button>
-        </div>
-    </div>
-</header>
 <body>
-    <div class="container">
-        
-        <div id="content"></div>
-    </div>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="logotipo.jpg" alt="RentaCar Logo" class="banner">
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-bar" placeholder="Buscar veículos..." onkeyup="searchCars()">
+                <button onclick="showView('registerUser')">Cadastrar Usuário</button>
+                <button onclick="showView('registerCar')">Cadastrar Veículo</button>
+                <button onclick="showView('listCars')">Lista de Veículos</button>
+            </div>
+            <div class="advanced-search">
+                <h3>Alugue um carro pelo local e data</h3>
+                <select id="location">
+                    <option value="">Escolha a cidade</option>
+                    <option value="sao-paulo">São Paulo</option>
+                    <option value="rio-de-janeiro">Rio de Janeiro</option>
+                    <option value="belo-horizonte">Belo Horizonte</option>
+                </select>
+                <input type="date" id="start-date">
+                <input type="date" id="end-date">
+                <button onclick="searchAvailableCars()">Buscar</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container" id="content"></div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
