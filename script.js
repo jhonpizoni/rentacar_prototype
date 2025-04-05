@@ -34,7 +34,8 @@ function showView(view) {
                     ${yearOptions}
                 </select>
                 <input type='text' id='carPrice' placeholder='Preço'>
-                <input type='file' id='carImage'>
+                <input type='file' id='carImage' accept='image/jpeg,image/png'>
+                <small style='display:block; margin-top:5px; font-size: 11px; color: #555;'>Imagens JPEG ou PNG</small>
                 <button onclick='registerCar()'>Cadastrar</button>
                 <p id='errorMessage' style='color: red;'></p>
             </div>`;
@@ -57,11 +58,15 @@ function registerCar() {
     if (!model) errorMessage += "Preencha o modelo do veículo.\n";
     if (!year) errorMessage += "Selecione o ano do veículo.\n";
     if (!price) errorMessage += "Preencha o preço do veículo.\n";
-    if (!imageFile) errorMessage += "Selecione uma imagem do veículo.\n";
+    if (!imageFile) {
+        errorMessage += "Selecione uma imagem do veículo.\n";
+    } else if (!["image/jpeg", "image/png"].includes(imageFile.type)) {
+        errorMessage += "Formato não suportado\n";
+    }
 
     if (errorMessage) {
         errorElement.innerText = errorMessage;
-        setTimeout(() => errorElement.innerText = "", 1500);
+        setTimeout(() => errorElement.innerText = "", 2000);
         return;
     }
 
@@ -73,6 +78,8 @@ function registerCar() {
     };
     reader.readAsDataURL(imageFile);
 }
+
+
 
 function renderCarList(filteredVehicles) {
     let content = document.getElementById("content");
