@@ -79,20 +79,21 @@ function registerCar() {
     reader.readAsDataURL(imageFile);
 }
 
-
-
 function renderCarList(filteredVehicles) {
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+
     let content = document.getElementById("content");
-    content.innerHTML = `
-        <div class='card'>
-            <h2>Lista de Veículos Disponíveis</h2>
-            ${filteredVehicles.map(v => `
-                <div style="border: 1px solid #ccc; border-radius: 10px; margin: 10px; padding: 10px;">
-                    <img src="${v.image}" alt="${v.model}" style="width: 100px; height: auto; border-radius: 5px;">
-                    <p><strong>${v.brand} ${v.model}</strong> (${v.year}) - ${v.price}</p>
-                </div>
-            `).join('')}
-        </div>`;
+    content.innerHTML = `<div class='card'><h2>Lista de Veículos Disponíveis</h2>
+        ${filteredVehicles.map(v => `
+            <div style="margin-bottom: 15px;">
+                ${v.image ? `<img src="${v.image}" alt="Imagem do carro" style="max-width: 200px; display: block; margin: 0 auto 10px;">` : ""}
+                <p><strong>${v.brand} ${v.model} (${v.year})</strong><br> ${formatter.format(parseFloat(v.price))} <span style="font-size: 13px; color: #555;">p/ dia</span></p>
+            </div>
+        `).join('')}
+    </div>`;
 }
 
 function searchCars() {
