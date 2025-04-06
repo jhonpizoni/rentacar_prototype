@@ -10,11 +10,9 @@
 <body>
     <header>
         <div class="barra-usuario">
-            <div class="barra-usuario">
-                <button onclick="showView('perfil')">
-                    <span class="material-icons">person</span>
-                </button>
-            </div>
+            <button id="userIcon" onclick="handleUserButtonClick()">
+                <span class="material-icons" id="userIconText">person</span>
+            </button>
         </div>
         <div class="container">
             <div class="logo-container">
@@ -22,7 +20,7 @@
             </div>
             <div class="search-bar">
                 <input type="text" id="search-bar" placeholder="Buscar veículos..." onkeyup="searchCars()">
-                <button onclick="showView('registerUser')">Cadastrar Usuário</button>
+                <button id="btnRegisterUser" onclick="showView('registerUser')">Cadastrar Usuário</button>
                 <button onclick="showView('registerCar')">Cadastrar Veículo</button>
                 <button onclick="showView('listCars')">Lista de Veículos</button>
             </div>

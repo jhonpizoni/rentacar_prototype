@@ -1,3 +1,19 @@
+# node_modules das duas partes
 node_modules/
-package-lock.json
-package.json
+backend/node_modules/
+
+# pastas com arquivos locais ou temporários
+backend/uploads/
+
+# variáveis de ambiente
+backend/.env
+
+# arquivos de log
+*.log
+
+# arquivos de sistemas operacionais
+.DS_Store
+Thumbs.db
+
+# arquivos do VSCode
+.vscode/
