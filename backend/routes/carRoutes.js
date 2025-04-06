@@ -17,14 +17,23 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/', upload.single('image'), async (req, res) => {
-    const { brand, model, year, price } = req.body;
-    const image = req.file ? `http://localhost:8080/uploads/${req.file.filename}` : '';
+    try {
+        const { brand, model, year, price, owner } = req.body;
+        const image = req.file ? `http://localhost:8080/uploads/${req.file.filename}` : '';
 
+        if (!owner) {
+            return res.status(400).json({ error: "ID do usuário (owner) é obrigatório." });
+        }
 
-    const car = new Car({ brand, model, year, price, image });
-    await car.save();
-    res.json(car);
+        const car = new Car({ brand, model, year, price, image, owner });
+        await car.save();
+        res.status(201).json(car);
+    } catch (err) {
+        console.error("Erro ao cadastrar carro:", err);
+        res.status(500).json({ error: "Erro ao cadastrar carro." });
+    }
 });
+
 
 router.get('/', async (req, res) => {
     const cars = await Car.find();

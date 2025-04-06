@@ -5,7 +5,8 @@ const carSchema = new mongoose.Schema({
     model: String,
     year: String,
     price: String,
-    image: String
+    image: String,
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // referência para o dono do carro
 });
 
 module.exports = mongoose.model('Car', carSchema);
