@@ -38,9 +38,9 @@ router.delete('/:id', async (req, res) => {
             return res.status(404).json({ message: 'Veículo não encontrado' });
         }
         if (car.image) {
-            const imagePath = path.join(__dirname, '..', car.image);
+            const filename = car.image.split('/').pop();
+            const imagePath = path.join(__dirname, '..', 'uploads', filename);
         
-            // Verifica se o arquivo existe antes de tentar excluir
             fs.access(imagePath, fs.constants.F_OK, (err) => {
                 if (!err) {
                     fs.unlink(imagePath, (err) => {
