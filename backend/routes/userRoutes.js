@@ -39,4 +39,21 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Rota de login por email
+router.post('/login', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ message: 'Erro ao realizar login', error: err });
+    }
+});
+
+
 module.exports = router;
