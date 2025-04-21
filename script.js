@@ -4,21 +4,28 @@ const tipoVeiculo = "carros";
 let vehicles = [];
 
 function loadCars() {
-    fetch("http://localhost:8080/api/cars")
-        .then(res => res.json())
-        .then(data => {
-            const userId = localStorage.getItem("userId");
-            if (userId) {
-                vehicles = data.filter(v => v.owner === userId);
-            } else {
-                vehicles = [];
-            }
-            renderCarList(vehicles);
-        })
-        .catch(err => {
-            console.error("Erro ao buscar carros:", err);
-        });
+    // Simulação manual de veículos
+    vehicles = [
+        {
+            _id: "1",
+            brand: "Honda",
+            model: "Civic",
+            year: "2020",
+            price: "150",
+            image: "https://via.placeholder.com/200x120?text=Civic"
+        },
+        {
+            _id: "2",
+            brand: "Toyota",
+            model: "Corolla",
+            year: "2018",
+            price: "130",
+            image: "https://via.placeholder.com/200x120?text=Corolla"
+        }
+    ];
+    renderCarList(vehicles);
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     updateUserUI();
@@ -42,6 +49,8 @@ function showView(view) {
             <small style='font-size: 11px; color: #555;'>CNH (JPEG, PNG ou PDF)</small>
             <button onclick='registerUser()'>Cadastrar</button>
         </div>`;  
+
+    
     
     } else if (view === "registerCar") {
         let currentYear = new Date().getFullYear();
@@ -68,7 +77,17 @@ function showView(view) {
     
     } else if (view === "listCars") {
         loadCars();
+    } else if (view === "login") {
+        content.innerHTML = `
+            <div class='card'>
+                <h2>Login do Usuário</h2>
+                <input type='email' id='loginEmail' placeholder='Email'>
+                <button onclick='loginUser()'>Entrar</button>
+            </div>`;
     }
+    
+
+    
 }
 
 function registerCar() {
@@ -81,26 +100,26 @@ function registerCar() {
 
     const owner = localStorage.getItem("userId");
 
+    if (!owner) {
+        alert("Você precisa estar logado para cadastrar um veículo.");
+        return;
+    }
+
     let errorMessage = "";
 
-    if (!owner) errorMessage += "Usuário não autenticado.\n";
     if (!brand) errorMessage += "Preencha a marca do veículo.\n";
     if (!model) errorMessage += "Preencha o modelo do veículo.\n";
     if (!year) errorMessage += "Selecione o ano do veículo.\n";
-    if (!price) {
-        errorMessage += "Preencha o preço do veículo.\n";
-    } else if (isNaN(price) || parseFloat(price) <= 0) {
+    if (!price || isNaN(price) || parseFloat(price) <= 0) {
         errorMessage += "Preço inválido.\n";
     }
-    if (!imageFile) {
-        errorMessage += "Selecione uma imagem do veículo.\n";
-    } else if (!["image/jpeg", "image/png"].includes(imageFile.type)) {
-        errorMessage += "Formato de imagem não suportado\n";
+    if (!imageFile || !["image/jpeg", "image/png"].includes(imageFile.type)) {
+        errorMessage += "Selecione uma imagem JPEG ou PNG.\n";
     }
 
     if (errorMessage) {
         errorElement.innerText = errorMessage;
-        setTimeout(() => errorElement.innerText = "", 2000);
+        setTimeout(() => errorElement.innerText = "", 3000);
         return;
     }
 
@@ -112,11 +131,23 @@ function registerCar() {
     formData.append("image", imageFile);
     formData.append("owner", owner);
 
+    // log para depuração
+    for (let pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
     fetch("http://localhost:8080/api/cars", {
         method: "POST",
         body: formData,
     })
-    .then(res => res.json())
+    .then(async res => {
+        if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`Erro do servidor: ${text}`);
+        }
+        return res.json();
+    })
+    
     .then(data => {
         alert("Veículo cadastrado com sucesso!");
         showView("listCars");
@@ -124,9 +155,10 @@ function registerCar() {
     })
     .catch(err => {
         console.error("Erro ao cadastrar carro:", err);
-        alert("Erro ao cadastrar veículo.");
+        alert("Erro ao cadastrar veículo. Veja o console para detalhes.");
     });
 }
+
 
 async function registerUser() {
     const name = document.getElementById('name').value;
@@ -178,11 +210,13 @@ function renderCarList(filteredVehicles) {
                     <p><strong>${v.brand} ${v.model} (${v.year})</strong><br>
                     ${formatter.format(parseFloat(v.price))} <span style="font-size: 13px; color: #555;">p/ dia</span></p>
                     <button onclick="deleteCar('${v._id}')">Excluir</button>
+                    <button>Alugar</button>
                 </div>
             `).join('')}            
             </div>
         </div>`;
 }
+
 
 
 function searchCars() {
@@ -216,16 +250,20 @@ function deleteCar(id) {
 function updateUserUI() {
     const userId = localStorage.getItem("userId");
     const btnRegisterUser = document.getElementById("btnRegisterUser");
+    const btnLogin = document.getElementById("btnLogin");
     const userIconText = document.getElementById("userIconText");
 
     if (userId) {
         btnRegisterUser.style.display = "none";
+        btnLogin.style.display = "none";
         userIconText.textContent = "logout";
     } else {
         btnRegisterUser.style.display = "inline-block";
+        btnLogin.style.display = "inline-block";
         userIconText.textContent = "person";
     }
 }
+
 
 function handleUserButtonClick() {
     const userId = localStorage.getItem("userId");
@@ -238,4 +276,30 @@ function handleUserButtonClick() {
     } else {
         showView("registerUser");
     }
+
+async function loginUser() {
+    const email = document.getElementById('loginEmail').value;
+
+    try {
+        const response = await fetch('http://localhost:8080/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        if (response.ok) {
+            const user = await response.json();
+            localStorage.setItem('userId', user._id);
+            alert('Login realizado com sucesso!');
+            updateUserUI();
+            showView('listCars');
+        } else {
+            alert('Usuário não encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao fazer login');
+    }
+}
+
 }
