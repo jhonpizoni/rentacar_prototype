@@ -4,27 +4,18 @@ const tipoVeiculo = "carros";
 let vehicles = [];
 
 function loadCars() {
-    // Simulação manual de veículos
-    vehicles = [
-        {
-            _id: "1",
-            brand: "Honda",
-            model: "Civic",
-            year: "2020",
-            price: "150",
-            image: "https://via.placeholder.com/200x120?text=Civic"
-        },
-        {
-            _id: "2",
-            brand: "Toyota",
-            model: "Corolla",
-            year: "2018",
-            price: "130",
-            image: "https://via.placeholder.com/200x120?text=Corolla"
-        }
-    ];
-    renderCarList(vehicles);
+    fetch("http://localhost:8080/api/cars")
+        .then(response => response.json())
+        .then(data => {
+            vehicles = data;
+            renderCarList(vehicles);
+        })
+        .catch(error => {
+            console.error("Erro ao carregar carros:", error);
+            alert("Erro ao carregar veículos.");
+        });
 }
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
